@@ -1,0 +1,105 @@
+.navbar-brand {
+        font-weight: 500;
+        color: #6366f1;
+        font-size: 24px;
+        transition: 0.3s color;
+      }
+
+      .navbar {
+        background-color: #f5f6fa;
+        height: 80px;
+        margin: 20px;
+        border-radius: 16px;
+        padding: 0.5rem;
+      }
+
+      .login-button {
+        background-color: #8b5cf6;
+        color: #fff; 
+        font-size: 14px;
+        padding: 8px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s background-color;
+      }
+
+      .login-button:hover {
+        background-color: #7c3aed;
+      }
+
+      .navbar-toggler {
+        border: none;
+        font-size: 1.25rem;
+      }
+
+      .navbar-toggler:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      .navbar-toggler:focus, .btn-close:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      .nav-link {
+        color: #636e72;
+        font-weight: 500;
+        position: relative;
+      }
+
+      .nav-link:hover, .nav-link.active {
+        color: #2d3436;
+      }
+
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0; 
+        height: 2px;
+        background-color: #a29bfe;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+      }
+
+      .nav-link:hover::before {
+        width: 100%;
+        visibility: visible;
+      }
+
+.hero-section {
+  background: url('../images/fondo.jpg') no-repeat center center;
+  background-size: cover;    
+  background-attachment: fixed;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.hero-section {
+  min-height: 100vh;
+}
+
+      .hero-section::before {
+        background-color: rgba(0, 0, 0, 0.6);
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .hero-section .container {
+        height: 100vh;
+        z-index: 1;
+        position: relative;
+      }
+
+      .hero-section h1 {
+        font-size: 1.5em;
+      }
+
+      
