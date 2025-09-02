@@ -103,6 +103,20 @@
       }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .registro-section {
     background: url('../images/fondo-crear-cuenta.jpeg') no-repeat center center;
     background-size: cover;    
@@ -194,3 +208,65 @@
         .required {
             color: #dc3545;
         }
+
+
+
+/* Login */
+.login-section {
+    background: url('../images/fondo-login.jpg') no-repeat center center;
+    background-size: cover;    
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    padding-top: 120px; 
+}
+
+
+
+.login-section::before {
+    background-color: rgba(0, 0, 0, 0.6);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+.login-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-login {
+    background: linear-gradient(45deg, #8b5cf6, #a855f7);
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+    background: linear-gradient(45deg, #7c3aed, #9333ea);
+}
+
+.titulo-login {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
