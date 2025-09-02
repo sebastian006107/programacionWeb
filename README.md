@@ -1,1 +1,1 @@
-Repositorio poara la asginatura programacion web
+Repositorio para la asignatura programacion web
