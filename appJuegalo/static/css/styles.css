@@ -1,0 +1,272 @@
+.navbar-brand {
+        font-weight: 500;
+        color: #6366f1;
+        font-size: 24px;
+        transition: 0.3s color;
+      }
+
+      .navbar {
+        background-color: #f5f6fa;
+        height: 80px;
+        margin: 20px;
+        border-radius: 16px;
+        padding: 0.5rem;
+      }
+
+      .login-button {
+        background-color: #8b5cf6;
+        color: #fff; 
+        font-size: 14px;
+        padding: 8px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: 0.3s background-color;
+      }
+
+      .login-button:hover {
+        background-color: #7c3aed;
+      }
+
+      .navbar-toggler {
+        border: none;
+        font-size: 1.25rem;
+      }
+
+      .navbar-toggler:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      .navbar-toggler:focus, .btn-close:focus {
+        box-shadow: none;
+        outline: none;
+      }
+
+      .nav-link {
+        color: #636e72;
+        font-weight: 500;
+        position: relative;
+      }
+
+      .nav-link:hover, .nav-link.active {
+        color: #2d3436;
+      }
+
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0; 
+        height: 2px;
+        background-color: #a29bfe;
+        visibility: hidden;
+        transition: 0.3s ease-in-out;
+      }
+
+      .nav-link:hover::before {
+        width: 100%;
+        visibility: visible;
+      }
+
+.hero-section {
+  background: url('../images/fondo.jpg') no-repeat center center;
+  background-size: cover;    
+  background-attachment: fixed;
+  min-height: 60vh;
+  width: 100%;
+}
+
+.hero-section {
+  min-height: 100vh;
+}
+
+      .hero-section::before {
+        background-color: rgba(0, 0, 0, 0.6);
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .hero-section .container {
+        height: 100vh;
+        z-index: 1;
+        position: relative;
+      }
+
+      .hero-section h1 {
+        font-size: 1.5em;
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.registro-section {
+    background: url('../images/fondo-crear-cuenta.jpeg') no-repeat center center;
+    background-size: cover;    
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    padding-top: 120px; 
+}
+        .registro-section::before {
+            background-color: rgba(0, 0, 0, 0.6);
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+        
+        .registro-section .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .registro-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .form-control:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+        }
+        
+        .form-select:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+        }
+        
+        .btn-registro {
+            background: linear-gradient(45deg, #8b5cf6, #a855f7);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .btn-registro:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+            background: linear-gradient(45deg, #7c3aed, #9333ea);
+        }
+        
+        .error-message {
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            background-image: none;
+        }
+        
+        .form-select.is-invalid {
+            border-color: #dc3545;
+            background-image: none;
+        }
+        
+        .titulo-registro {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+
+
+
+/* Login */
+.login-section {
+    background: url('../images/fondo-login.jpg') no-repeat center center;
+    background-size: cover;    
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    padding-top: 120px; 
+}
+
+
+
+.login-section::before {
+    background-color: rgba(0, 0, 0, 0.6);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+.login-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-login {
+    background: linear-gradient(45deg, #8b5cf6, #a855f7);
+    border: none;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+    background: linear-gradient(45deg, #7c3aed, #9333ea);
+}
+
+.titulo-login {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
