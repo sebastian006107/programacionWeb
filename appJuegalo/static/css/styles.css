@@ -272,11 +272,29 @@
 }
 
 
-/* Estilos para las cards de juegos */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Tarjetas de juegos */
 .game-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: none;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
 }
 
 .game-card:hover {
@@ -285,6 +303,8 @@
 }
 
 .game-card .card-img-top {
+    height: 180px;
+    object-fit: cover;
     transition: transform 0.3s ease;
 }
 
@@ -306,7 +326,7 @@
     overflow: hidden;
 }
 
-/* Sección de juegos populares */
+/*juegos populares */
 #juegos-populares {
     min-height: 400px;
 }
@@ -320,10 +340,3 @@
     background-color: #8b5cf6;
     border-color: #8b5cf6;
 }
-
-
-
-
-
-
-
