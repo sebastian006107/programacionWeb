@@ -270,3 +270,60 @@
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
+
+
+/* Estilos para las cards de juegos */
+.game-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.game-card .card-img-top {
+    transition: transform 0.3s ease;
+}
+
+.game-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.game-card .card-body {
+    padding: 1rem;
+}
+
+.game-card .card-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    min-height: 2.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Sección de juegos populares */
+#juegos-populares {
+    min-height: 400px;
+}
+
+.btn-outline-primary {
+    border-color: #8b5cf6;
+    color: #8b5cf6;
+}
+
+.btn-outline-primary:hover {
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+
+
+
+
+
+
