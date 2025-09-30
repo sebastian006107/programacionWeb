@@ -10,3 +10,11 @@ def crear_cuenta(request):
 
 def login_view(request):
     return render(request, 'login.html')
+
+def detalle_juego(request, game_id):
+    return render(request, 'detalle-juego.html', {'game_id': game_id})
+
+def pc(request):
+    return render(request, 'pc.html')
+def playstation(request):
+    return render(request, 'playstation.html')

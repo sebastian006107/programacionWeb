@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Juegos de PC - Juegalo{% endblock %}
+
+{% block nav_pc %}active{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <h1 class="text-center mb-4">Juegos Más Populares para PC</h1>
+    
+    <div class="row" id="juegos-pc">
+        <div class="col-12 text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/pc.js' %}"></script>
+{% endblock %}

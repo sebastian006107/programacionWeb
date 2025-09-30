@@ -1,11 +1,10 @@
 $(document).ready(function() {
     const API_KEY = '646d5d8f63a44be69214f55e42654973';
     
-    function cargarJuegosPopulares() {
-        // mensaje carga
-        $('#juegos-populares').html('<div class="col-12 text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Cargando...</span></div></div>');
+    function cargarJuegosPC() {
+        $('#juegos-pc').html('<div class="col-12 text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Cargando...</span></div></div>');
         
-        const url = `https://api.rawg.io/api/games?key=${API_KEY}&page_size=12&ordering=-added&metacritic=85,100`;
+        const url = `https://api.rawg.io/api/games?key=${API_KEY}&platforms=4&page_size=30&ordering=-metacritic&dates=2020-01-01,2025-12-31`;
         
         $.ajax({
             url: url,
@@ -15,7 +14,7 @@ $(document).ready(function() {
             },
             error: function(error) {
                 console.error('Error al cargar juegos:', error);
-                $('#juegos-populares').html('<div class="col-12 text-center text-danger">Error al cargar los juegos. Por favor, intenta más tarde.</div>');
+                $('#juegos-pc').html('<div class="col-12 text-center text-danger">Error al cargar los juegos. Por favor, intenta más tarde.</div>');
             }
         });
     }
@@ -35,7 +34,7 @@ $(document).ready(function() {
                 `<span class="badge bg-success">${juego.metacritic}</span>` : '';
             
             html += `
-                <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 game-card" data-game-id="${juego.id}">
                         <div class="position-relative">
                             <img src="${juego.background_image}" class="card-img-top" alt="${juego.name}">
@@ -57,7 +56,7 @@ $(document).ready(function() {
             `;
         });
         
-        $('#juegos-populares').html(html);
+        $('#juegos-pc').html(html);
         
         $('.game-card').on('click', function() {
             const gameId = $(this).data('game-id');
@@ -65,5 +64,5 @@ $(document).ready(function() {
         });
     }
     
-    cargarJuegosPopulares();
+    cargarJuegosPC();
 });
