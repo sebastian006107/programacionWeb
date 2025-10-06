@@ -1,65 +1,90 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Detalle del Juego - Juegalo{% endblock %}
+{% block title %}{{ juego.nombre }} - Juegalo{% endblock %}
 
 {% block content %}
 <div class="container mt-5 pt-5">
+    {% if juego %}
     <div class="row">
-        <!-- Columna del carrusel -->
         <div class="col-lg-7">
-            <div id="carouselJuego" class="carousel slide mb-4" data-bs-ride="carousel">
-                <div class="carousel-inner" id="carousel-imagenes">
-                    <div class="text-center p-5">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Cargando...</span>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselJuego" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselJuego" data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </button>
+            {% if juego.imagen_principal %}
+            <div class="mb-4">
+                <img src="{{ juego.imagen_principal }}" class="w-100" style="border-radius: 10px;" alt="{{ juego.nombre }}">
             </div>
+            {% endif %}
         </div>
 
-        <!-- Columna de información -->
         <div class="col-lg-5">
-            <div id="info-juego">
-                <div class="text-center p-5">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Cargando...</span>
-                    </div>
+            <div>
+                <h1 class="mb-3">{{ juego.nombre }}</h1>
+                
+                <div class="mb-3">
+                    <strong>Calificación:</strong>
+                    <span class="text-warning">
+                        {% with rating=juego.rating|floatformat:0|add:"0" %}
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= rating %}⭐{% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                        {{ juego.rating }}
+                    </span>
                 </div>
+                
+                {% if juego.metacritic %}
+                <div class="mb-3">
+                    <strong>Metacritic:</strong>
+                    <span class="badge bg-success">{{ juego.metacritic }}</span>
+                </div>
+                {% endif %}
+                
+                {% if juego.fecha_lanzamiento %}
+                <div class="mb-3">
+                    <strong>Fecha de Lanzamiento:</strong> {{ juego.fecha_lanzamiento|date:"d M Y" }}
+                </div>
+                {% endif %}
+                
+                <div class="mb-3">
+                    <strong>Géneros:</strong><br>
+                    {% for genero in juego.generos.all %}
+                        <span class="info-badge">{{ genero.nombre }}</span>
+                    {% endfor %}
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Plataformas:</strong><br>
+                    {% for plataforma in juego.plataformas.all|slice:":5" %}
+                        <span class="info-badge">{{ plataforma.nombre }}</span>
+                    {% endfor %}
+                </div>
+                
+                {% if juego.sitio_web %}
+                <a href="{{ juego.sitio_web }}" target="_blank" class="btn btn-primary w-100 mt-3">
+                    Sitio Web Oficial
+                </a>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    <!-- Descripción completa -->
     <div class="row mt-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <h3>Acerca del Juego</h3>
-                    <div id="descripcion-juego">
-                        <div class="text-center p-3">
-                            <div class="spinner-border spinner-border-sm" role="status">
-                                <span class="visually-hidden">Cargando...</span>
-                            </div>
-                        </div>
-                    </div>
+                    {% if juego.descripcion %}
+                        <p>{{ juego.descripcion }}</p>
+                    {% else %}
+                        <p>No hay descripción disponible.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="alert alert-danger">
+        No se encontró información del juego.
+    </div>
+    {% endif %}
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    const GAME_ID = {{ game_id }};
-</script>
-<script src="{% static 'js/detalle-juego.js' %}"></script>
 {% endblock %}

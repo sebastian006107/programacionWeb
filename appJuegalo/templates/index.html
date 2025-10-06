@@ -12,19 +12,16 @@
     </div>
 </section>
 
-
 <section class="container my-5">
     <h2 class="text-center mb-4">Juegos Más Populares</h2>
-    <div class="row" id="juegos-populares">
-        <div class="col-12 text-center">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Cargando...</span>
+    <div class="row">
+        {% for juego in juegos %}
+            {% include '_game_card.html' with juego=juego %}
+        {% empty %}
+            <div class="col-12 text-center">
+                <p>No hay juegos disponibles.</p>
             </div>
-        </div>
+        {% endfor %}
     </div>
 </section>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/juegos-populares.js' %}"></script>
 {% endblock %}

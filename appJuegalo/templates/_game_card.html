@@ -1,0 +1,35 @@
+<div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+    <a href="{% url 'appJuegalo:detalle_juego' juego.id_rawg %}" class="text-decoration-none">
+        <div class="card h-100 game-card">
+            <div class="position-relative">
+                <img src="{{ juego.imagen_principal }}" class="card-img-top" alt="{{ juego.nombre }}">
+                <div class="position-absolute top-0 end-0 p-2">
+                    {% if juego.metacritic %}
+                    <span class="badge bg-success">{{ juego.metacritic }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <h6 class="card-title fw-bold">{{ juego.nombre }}</h6>
+                <p class="text-muted small mb-2">
+                    {% for genero in juego.generos.all|slice:":2" %}
+                        {{ genero.nombre }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    {% if juego.fecha_lanzamiento %}
+                        • {{ juego.fecha_lanzamiento.year }}
+                    {% endif %}
+                </p>
+                <div class="mb-2">
+                    <small class="text-warning">
+                        {% with rating=juego.rating|floatformat:0|add:"0" %}
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= rating %}⭐{% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                        {{ juego.rating }}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
