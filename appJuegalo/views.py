@@ -1,7 +1,10 @@
-from django.shortcuts import render
-from .models import Juego, Plataforma
+from django.shortcuts import render, redirect
+from .models import Juego, Plataforma, Perfil
 from .services import sincronizar_juegos, obtener_detalle_juego_api, guardar_juego_bd
+from .forms import RegistroForm
+from django.contrib.auth import authenticate, login
 
+# ... resto de tu código ...
 def home(request):
     juegos = Juego.objects.all()[:12]
     
@@ -12,12 +15,55 @@ def home(request):
     return render(request, 'index.html', {'juegos': juegos})
 
 
+
+
 def crear_cuenta(request):
-    return render(request, 'crear-cuenta.html')
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            
+            Perfil.objects.create(
+                user=user,
+                telefono=form.cleaned_data.get('telefono'),
+                direccion=form.cleaned_data.get('direccion')
+            )
+            
+            return redirect('appJuegalo:login')
+    else:
+        form = RegistroForm()
+    
+    return render(request, 'crear-cuenta.html', {'form': form})
+
+
+
+
+
+
 
 
 def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('appJuegalo:home')
+        else:
+            error = "Usuario o contraseña incorrectos"
+            return render(request, 'login.html', {'error': error})
+    
     return render(request, 'login.html')
+
+
+
+
+
+
+
 
 
 def pc(request):

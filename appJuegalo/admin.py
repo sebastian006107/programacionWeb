@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Genero, Plataforma, Juego
+from .models import Genero, Plataforma, Juego, Perfil
 
 @admin.register(Genero)
 class GeneroAdmin(admin.ModelAdmin):
@@ -17,3 +17,8 @@ class JuegoAdmin(admin.ModelAdmin):
     search_fields = ['nombre']
     list_filter = ['generos', 'plataformas']
     filter_horizontal = ['generos', 'plataformas']
+
+
+@admin.register(Perfil)
+class PerfilAdmin(admin.ModelAdmin):
+    list_display = ['user', 'telefono', 'direccion']

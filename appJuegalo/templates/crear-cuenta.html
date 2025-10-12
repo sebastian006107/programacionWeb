@@ -15,50 +15,56 @@
                 <div class="registro-card p-5">
                     <h1 class="titulo-registro text-white">Crear Cuenta en Juegalo</h1>
 
-                    <form id="registroForm" novalidate>
-                        <!-- Nombre -->
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Username -->
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre <span class="required">*</span></label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
-                            <div class="error-message text-danger"></div>
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Nombre de usuario <span class="required">*</span></label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                                <div class="text-danger">{{ form.username.errors }}</div>
+                            {% endif %}
                         </div>
 
-                        <!-- Apellidos -->
+                        <!-- Email -->
                         <div class="mb-3">
-                            <label for="apellidos" class="form-label">Apellidos <span class="required">*</span></label>
-                            <input type="text" class="form-control" id="apellidos" placeholder="Tus apellidos" required>
-                            <div class="error-message text-danger"></div>
-                        </div>
-
-                        <!-- Correo -->
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico <span class="required">*</span></label>
-                            <input type="email" class="form-control" id="correo" placeholder="tu@email.com" required>
-                            <div class="error-message text-danger"></div>
-                        </div>
-
-                        <!-- Dirección -->
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección <span class="required">*</span></label>
-                            <input type="text" class="form-control" id="direccion" placeholder="Tu dirección completa" required>
-                            <div class="error-message text-danger"></div>
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Correo Electrónico <span class="required">*</span></label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors }}</div>
+                            {% endif %}
                         </div>
 
                         <!-- Teléfono -->
                         <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono <span class="required">*</span></label>
-                            <input type="tel" class="form-control" id="telefono" placeholder="+56 9 1234 5678" required>
-                            <div class="error-message text-danger"></div>
+                            <label for="{{ form.telefono.id_for_label }}" class="form-label">Teléfono</label>
+                            {{ form.telefono }}
                         </div>
 
-                        <div class="mb-4">
-                            <label for="rol" class="form-label">Tipo de Usuario <span class="required">*</span></label>
-                            <select class="form-select" id="rol" required>
-                                <option value="">Selecciona tu tipo de cuenta</option>
-                                <option value="4">Usuario</option>
-                                <option value="1">Administrador</option>
-                            </select>
-                            <div class="error-message text-danger"></div>
+                        <!-- Dirección -->
+                        <div class="mb-3">
+                            <label for="{{ form.direccion.id_for_label }}" class="form-label">Dirección</label>
+                            {{ form.direccion }}
+                        </div>
+
+                        <!-- Password1 -->
+                        <div class="mb-3">
+                            <label for="{{ form.password1.id_for_label }}" class="form-label">Contraseña <span class="required">*</span></label>
+                            {{ form.password1 }}
+                            {% if form.password1.errors %}
+                                <div class="text-danger">{{ form.password1.errors }}</div>
+                            {% endif %}
+                            <small class="text-muted d-block mt-1">Mínimo 8 caracteres</small>
+                        </div>
+
+                        <!-- Password2 -->
+                        <div class="mb-3">
+                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmar Contraseña <span class="required">*</span></label>
+                            {{ form.password2 }}
+                            {% if form.password2.errors %}
+                                <div class="text-danger">{{ form.password2.errors }}</div>
+                            {% endif %}
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-registro w-100 text-white">
@@ -75,8 +81,4 @@
         </div>
     </div>
 </section>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/crear-cuenta.js' %}"></script>
 {% endblock %}

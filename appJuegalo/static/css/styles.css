@@ -272,7 +272,33 @@
 }
 
 
+/* ===================================
+  ESTILOS FORMULARIOS DJANGO
+   =================================== */
+#id_username, 
+#id_email, 
+#id_telefono, 
+#id_direccion, 
+#id_password1, 
+#id_password2 {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fff;
+}
 
+#id_username:focus, 
+#id_email:focus, 
+#id_telefono:focus, 
+#id_direccion:focus, 
+#id_password1:focus, 
+#id_password2:focus {
+    border-color: #8b5cf6;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25);
+}
 
 
 
