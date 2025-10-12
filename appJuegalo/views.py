@@ -84,7 +84,7 @@ def pc(request):
 
 
 def playstation(request):
-    plataformas_ps = Plataforma.objects.filter(id_rawg__in=[18, 187, 16])
+    plataformas_ps = Plataforma.objects.filter(id_rawg__in=[187, 18])
     
     if plataformas_ps.exists():
         juegos = Juego.objects.filter(plataformas__in=plataformas_ps).distinct()[:30]
@@ -92,12 +92,81 @@ def playstation(request):
         juegos = Juego.objects.none()
     
     if juegos.count() < 30:
-        sincronizar_juegos(plataforma_id='18,187,16', cantidad=30)
-        plataformas_ps = Plataforma.objects.filter(id_rawg__in=[18, 187, 16])
+        sincronizar_juegos(plataforma_id='187,18', cantidad=30)
+        plataformas_ps = Plataforma.objects.filter(id_rawg__in=[187, 18])
         if plataformas_ps.exists():
             juegos = Juego.objects.filter(plataformas__in=plataformas_ps).distinct()[:30]
     
     return render(request, 'playstation.html', {'juegos': juegos})
+
+def xbox(request):
+    # Solo Xbox Series S/X
+    plataforma_xbox = Plataforma.objects.filter(id_rawg=186).first()
+    
+    if plataforma_xbox:
+        juegos = plataforma_xbox.juegos.all()[:30]
+    else:
+        juegos = Juego.objects.none()
+    
+    if juegos.count() < 30:
+        sincronizar_juegos(plataforma_id=186, cantidad=30)
+        plataforma_xbox = Plataforma.objects.filter(id_rawg=186).first()
+        if plataforma_xbox:
+            juegos = plataforma_xbox.juegos.all()[:30]
+    
+    return render(request, 'xbox.html', {'juegos': juegos})
+
+
+def nintendo(request):
+    # Solo Nintendo Switch
+    plataforma_nintendo = Plataforma.objects.filter(id_rawg=7).first()
+    
+    if plataforma_nintendo:
+        juegos = plataforma_nintendo.juegos.all()[:30]
+    else:
+        juegos = Juego.objects.none()
+    
+    if juegos.count() < 30:
+        sincronizar_juegos(plataforma_id=7, cantidad=30)
+        plataforma_nintendo = Plataforma.objects.filter(id_rawg=7).first()
+        if plataforma_nintendo:
+            juegos = plataforma_nintendo.juegos.all()[:30]
+    
+    return render(request, 'nintendo.html', {'juegos': juegos})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def detalle_juego(request, game_id):

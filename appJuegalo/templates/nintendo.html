@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Juegos de PlayStation - Juegalo{% endblock %}
+{% block title %}Juegos de Nintendo - Juegalo{% endblock %}
 
-{% block nav_playstation %}active{% endblock %}
+{% block nav_nintendo %}active{% endblock %}
 
 {% block content %}
 <div class="container mt-5 pt-5">
-    <h1 class="text-center mb-4">Juegos para PlayStation 5 y PlayStation 4</h1>
+    <h1 class="text-center mb-4">Juegos para Nintendo Switch</h1>
     
     <div class="row">
         {% for juego in juegos %}
             {% include '_game_card.html' with juego=juego %}
         {% empty %}
             <div class="col-12 text-center">
-                <p>No hay juegos disponibles para PlayStation.</p>
+                <p>No hay juegos disponibles para Nintendo Switch.</p>
             </div>
         {% endfor %}
     </div>
