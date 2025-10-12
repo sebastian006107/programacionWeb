@@ -25,7 +25,7 @@ class Juego(models.Model):
     id_rawg = models.IntegerField(unique=True)
     nombre = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
-    descripcion = models.TextField(blank=True, null=True)
+    descripcion = models.CharField(max_length=2000, blank=True, null=True)
     imagen_principal = models.URLField(max_length=500, blank=True, null=True)
     imagen_adicional = models.URLField(max_length=500, blank=True, null=True)
     fecha_lanzamiento = models.DateField(blank=True, null=True)

@@ -63,3 +63,5 @@ def detalle_juego(request, game_id):
             juego = guardar_juego_bd(data)
     
     return render(request, 'detalle-juego.html', {'juego': juego})
+
+
