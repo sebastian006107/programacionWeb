@@ -396,3 +396,40 @@
 
 
 
+
+/* ===================================
+   NAVBAR USER TEXT
+   =================================== */
+.navbar-user-text {
+    color: #2d3436;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.login-button.me-2 {
+    margin-right: 10px;
+}
+
+
+
+
+
+
+
+/* ===================================
+   LOGOUT BUTTON
+   =================================== */
+.login-button[type="submit"] {
+    background-color: #8b5cf6;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s background-color;
+}
+
+.login-button[type="submit"]:hover {
+    background-color: #7c3aed;
+}
