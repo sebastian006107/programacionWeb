@@ -33,19 +33,25 @@ class Juego(models.Model):
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     metacritic = models.IntegerField(blank=True, null=True)
     sitio_web = models.URLField(max_length=500, blank=True, null=True)
-    
     generos = models.ManyToManyField(Genero, related_name='juegos')
     plataformas = models.ManyToManyField(Plataforma, related_name='juegos')
+    
+    precio = models.DecimalField(max_digits=10, decimal_places=2, default=29990)
+    stock = models.IntegerField(default=10)
+    disponible = models.BooleanField(default=True)
     
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     
     class Meta:
         ordering = ['-rating', '-metacritic']
+        verbose_name_plural = "Juegos"
     
     def __str__(self):
         return self.nombre
     
+    def esta_disponible(self):
+        return self.disponible and self.stock > 0
 
 
 class Perfil(models.Model):
@@ -55,6 +61,3 @@ class Perfil(models.Model):
     
     def __str__(self):
         return f"Perfil de {self.user.username}"
-
-
-    

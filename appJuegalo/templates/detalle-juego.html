@@ -45,6 +45,18 @@
                 {% endif %}
                 
                 <div class="mb-3">
+                    <strong>Precio:</strong> 
+                    <span class="text-success fs-4 fw-bold">${{ juego.precio|floatformat:0 }}</span>
+                </div>
+
+                <div class="mb-3">
+                    <strong>Stock disponible:</strong> 
+                    <span class="{% if juego.stock > 5 %}text-success{% elif juego.stock > 0 %}text-warning{% else %}text-danger{% endif %}">
+                        {{ juego.stock }} unidades
+                    </span>
+                </div>
+                
+                <div class="mb-3">
                     <strong>Géneros:</strong><br>
                     {% for genero in juego.generos.all %}
                         <span class="info-badge">{{ genero.nombre }}</span>
@@ -57,9 +69,19 @@
                         <span class="info-badge">{{ plataforma.nombre }}</span>
                     {% endfor %}
                 </div>
+
+                {% if juego.esta_disponible %}
+                <div class="mb-3">
+                    <button class="btn btn-primary btn-lg w-100">Agregar al Carrito</button>
+                </div>
+                {% else %}
+                <div class="mb-3">
+                    <button class="btn btn-secondary btn-lg w-100" disabled>No Disponible</button>
+                </div>
+                {% endif %}
                 
                 {% if juego.sitio_web %}
-                <a href="{{ juego.sitio_web }}" target="_blank" class="btn btn-primary w-100 mt-3">
+                <a href="{{ juego.sitio_web }}" target="_blank" class="btn btn-outline-primary w-100">
                     Sitio Web Oficial
                 </a>
                 {% endif %}

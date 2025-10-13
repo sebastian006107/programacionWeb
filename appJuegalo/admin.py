@@ -13,12 +13,11 @@ class PlataformaAdmin(admin.ModelAdmin):
 
 @admin.register(Juego)
 class JuegoAdmin(admin.ModelAdmin):
-    list_display = ['nombre', 'rating', 'metacritic', 'fecha_lanzamiento']
+    list_display = ['nombre', 'precio', 'stock', 'disponible', 'rating', 'metacritic', 'fecha_lanzamiento']
     search_fields = ['nombre']
-    list_filter = ['generos', 'plataformas']
+    list_filter = ['generos', 'plataformas', 'disponible']
     filter_horizontal = ['generos', 'plataformas']
-
-
+    list_editable = ['precio', 'stock', 'disponible']
 @admin.register(Perfil)
 class PerfilAdmin(admin.ModelAdmin):
     list_display = ['user', 'telefono', 'direccion']

@@ -22,4 +22,17 @@ urlpatterns = [
     path('api/generos/', views.api_generos, name='api_generos'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+
+
+
+
+    # Panel de admin
+    path('admin/panel/', views.panel_admin, name='panel_admin'),
+    path('admin/juegos/crear/', views.crear_juego, name='crear_juego'),
+    path('admin/juegos/<int:juego_id>/eliminar/', views.eliminar_juego, name='eliminar_juego'),
 ]
+
+
+
+

@@ -18,15 +18,9 @@ class JuegoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Juego
         fields = [
-            'id', 
-            'id_rawg', 
-            'nombre', 
-            'slug',
-            'descripcion',
-            'imagen_principal',
-            'fecha_lanzamiento',
-            'rating',
-            'metacritic',
-            'generos',
-            'plataformas'
+            'id', 'id_rawg', 'nombre', 'slug',
+            'descripcion', 'imagen_principal',
+            'fecha_lanzamiento', 'rating',
+            'metacritic', 'generos', 'plataformas',
+            'precio', 'stock', 'disponible'
         ]

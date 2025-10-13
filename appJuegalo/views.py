@@ -4,7 +4,6 @@ from .services import sincronizar_juegos, obtener_detalle_juego_api, guardar_jue
 from .forms import RegistroForm
 from django.contrib.auth import authenticate, login
 
-# ... resto de tu código ...
 def home(request):
     juegos = Juego.objects.all()[:12]
     
@@ -13,7 +12,6 @@ def home(request):
         juegos = Juego.objects.all()[:12]
     
     return render(request, 'index.html', {'juegos': juegos})
-
 
 
 
@@ -40,8 +38,6 @@ def crear_cuenta(request):
 
 
 
-
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -57,11 +53,6 @@ def login_view(request):
             return render(request, 'login.html', {'error': error})
     
     return render(request, 'login.html')
-
-
-
-
-
 
 
 
@@ -268,3 +259,59 @@ def api_juego_detalle(request, pk):
         
         juego.delete()
         return Response({'mensaje': 'Juego eliminado correctamente'}, status=status.HTTP_204_NO_CONTENT)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #vista para el admin
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import get_object_or_404
+
+@staff_member_required
+def panel_admin(request):
+    juegos = Juego.objects.all().order_by('-fecha_creacion')
+    return render(request, 'admin/panel_admin.html', {'juegos': juegos})
+
+@staff_member_required
+def eliminar_juego(request, juego_id):
+    juego = get_object_or_404(Juego, id=juego_id)
+    if request.method == 'POST':
+        juego.delete()
+        return redirect('appJuegalo:panel_admin')
+    return render(request, 'admin/confirmar_eliminar.html', {'juego': juego})
+
+@staff_member_required
+def crear_juego(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        precio = request.POST.get('precio')
+        imagen_url = request.POST.get('imagen_url')
+        
+        juego = Juego.objects.create(
+            id_rawg=0,  # Manual
+            nombre=nombre,
+            descripcion=descripcion,
+            imagen_principal=imagen_url
+        )
+        return redirect('appJuegalo:panel_admin')
+    
+    generos = Genero.objects.all()
+    plataformas = Plataforma.objects.all()
+    return render(request, 'admin/crear_juego.html', {
+        'generos': generos,
+        'plataformas': plataformas
+    })
