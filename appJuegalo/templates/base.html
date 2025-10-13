@@ -47,23 +47,27 @@
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2 {% block nav_nintendo %}{% endblock %}" href="{% url 'appJuegalo:nintendo' %}">Nintendo</a>
                         </li>
+                        {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-lg-2" href="{% url 'appJuegalo:panel_admin' %}">Panel Admin</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
             
             {% block navbar_buttons %}
             <div class="d-flex align-items-center">
-    {% if user.is_authenticated %}
-        <span class="navbar-user-text me-3">Hola, {{ user.username }}</span>
-        <form method="POST" action="{% url 'appJuegalo:logout' %}" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="login-button" style="border: none; cursor: pointer;">Cerrar Sesión</button>
-        </form>
-    {% else %}
-        <a href="{% url 'appJuegalo:login' %}" class="login-button me-2">Iniciar Sesión</a>
-        <a href="{% url 'appJuegalo:crear_cuenta' %}" class="login-button">Crear Cuenta</a>
-    {% endif %}
-</div>
+                {% if user.is_authenticated %}
+                    <span class="navbar-user-text me-3">Hola, {{ user.username }}</span>
+                    <form method="POST" action="{% url 'appJuegalo:logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="login-button" style="border: none; cursor: pointer;">Cerrar Sesión</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'appJuegalo:login' %}" class="login-button me-2">Iniciar Sesión</a>
+                    <a href="{% url 'appJuegalo:crear_cuenta' %}" class="login-button">Crear Cuenta</a>
+                {% endif %}
             </div>
             {% endblock %}
             

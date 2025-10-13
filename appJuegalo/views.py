@@ -1,8 +1,16 @@
-from django.shortcuts import render, redirect
-from .models import Juego, Plataforma, Perfil, Genero
-from .services import sincronizar_juegos, obtener_detalle_juego_api, guardar_juego_bd
-from .forms import RegistroForm
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from .models import Juego, Plataforma, Genero, Perfil
+from .forms import RegistroForm
+from .services import sincronizar_juegos, obtener_detalle_juego_api, guardar_juego_bd
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import JuegoSerializer, GeneroSerializer, PlataformaSerializer
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib import messages
+from django.core.paginator import Paginator
 
 def home(request):
     juegos = Juego.objects.all()[:12]
@@ -12,8 +20,6 @@ def home(request):
         juegos = Juego.objects.all()[:12]
     
     return render(request, 'index.html', {'juegos': juegos})
-
-
 
 def crear_cuenta(request):
     if request.method == 'POST':
@@ -33,11 +39,6 @@ def crear_cuenta(request):
     
     return render(request, 'crear-cuenta.html', {'form': form})
 
-
-
-
-
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -54,9 +55,6 @@ def login_view(request):
     
     return render(request, 'login.html')
 
-
-
-
 def pc(request):
     plataforma_pc = Plataforma.objects.filter(id_rawg=4).first()
     
@@ -72,7 +70,6 @@ def pc(request):
             juegos = plataforma_pc.juegos.all()[:30]
     
     return render(request, 'pc.html', {'juegos': juegos})
-
 
 def playstation(request):
     plataformas_ps = Plataforma.objects.filter(id_rawg__in=[187, 18])
@@ -91,7 +88,6 @@ def playstation(request):
     return render(request, 'playstation.html', {'juegos': juegos})
 
 def xbox(request):
-    # Solo Xbox Series S/X
     plataforma_xbox = Plataforma.objects.filter(id_rawg=186).first()
     
     if plataforma_xbox:
@@ -107,9 +103,7 @@ def xbox(request):
     
     return render(request, 'xbox.html', {'juegos': juegos})
 
-
 def nintendo(request):
-    # Solo Nintendo Switch
     plataforma_nintendo = Plataforma.objects.filter(id_rawg=7).first()
     
     if plataforma_nintendo:
@@ -125,41 +119,6 @@ def nintendo(request):
     
     return render(request, 'nintendo.html', {'juegos': juegos})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def detalle_juego(request, game_id):
     juego = Juego.objects.filter(id_rawg=game_id).first()
     
@@ -170,57 +129,26 @@ def detalle_juego(request, game_id):
     
     return render(request, 'detalle-juego.html', {'juego': juego})
 
-
-# API REST
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from .serializers import JuegoSerializer, GeneroSerializer
-
-
-
 @api_view(['GET', 'POST'])
 @permission_classes([])
 def api_juegos(request):
     if request.method == 'GET':
-        # GET es público - cualquiera puede ver
         juegos = Juego.objects.all()
         serializer = JuegoSerializer(juegos, many=True)
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        # POST solo para admin
         if not request.user.is_authenticated:
-            return Response(
-                {'error': 'Debes iniciar sesión'}, 
-                status=status.HTTP_401_UNAUTHORIZED
-            )
+            return Response({'error': 'Debes iniciar sesión'}, status=401)
         
         if not request.user.is_staff:
-            return Response(
-                {'error': f'Usuario {request.user.username} no es admin. is_staff={request.user.is_staff}'}, 
-                status=status.HTTP_403_FORBIDDEN
-            )
+            return Response({'error': f'Usuario {request.user.username} no es admin'}, status=403)
         
         serializer = JuegoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET'])
-@permission_classes([])  # ← AGREGAR ESTA LÍNEA
-def api_generos(request):
-    generos = Genero.objects.all()
-    serializer = GeneroSerializer(generos, many=True)
-    return Response(serializer.data)
-
-
-
-
-
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([])
@@ -231,87 +159,43 @@ def api_juego_detalle(request, pk):
         return Response({'error': 'Juego no encontrado'}, status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
-        # GET es público
         serializer = JuegoSerializer(juego)
         return Response(serializer.data)
     
     elif request.method == 'PUT':
-        # PUT solo para admin
-        if not request.user.is_staff:
-            return Response(
-                {'error': 'Solo administradores pueden editar juegos'}, 
-                status=status.HTTP_403_FORBIDDEN
-            )
+        if not request.user.is_authenticated:
+            return Response({'error': 'Debes iniciar sesión'}, status=401)
         
-        serializer = JuegoSerializer(juego, data=request.data, partial=True)
+        if not request.user.is_staff:
+            return Response({'error': f'Usuario {request.user.username} no es admin'}, status=403)
+        
+        serializer = JuegoSerializer(juego, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'DELETE':
-        # DELETE solo para admin
+        if not request.user.is_authenticated:
+            return Response({'error': 'Debes iniciar sesión'}, status=401)
+        
         if not request.user.is_staff:
-            return Response(
-                {'error': 'Solo administradores pueden eliminar juegos'}, 
-                status=status.HTTP_403_FORBIDDEN
-            )
+            return Response({'error': f'Usuario {request.user.username} no es admin'}, status=403)
         
         juego.delete()
         return Response({'mensaje': 'Juego eliminado correctamente'}, status=status.HTTP_204_NO_CONTENT)
-    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #vista para el admin
-from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import get_object_or_404
+@api_view(['GET'])
+@permission_classes([])
+def api_generos(request):
+    generos = Genero.objects.all()
+    serializer = GeneroSerializer(generos, many=True)
+    return Response(serializer.data)
 
 @staff_member_required
 def panel_admin(request):
-    juegos = Juego.objects.all().order_by('-fecha_creacion')
+    juegos_list = Juego.objects.all().order_by('-fecha_creacion')
+    paginator = Paginator(juegos_list, 20)
+    page_number = request.GET.get('page')
+    juegos = paginator.get_page(page_number)
     return render(request, 'admin/panel_admin.html', {'juegos': juegos})
-
-@staff_member_required
-def eliminar_juego(request, juego_id):
-    juego = get_object_or_404(Juego, id=juego_id)
-    if request.method == 'POST':
-        juego.delete()
-        return redirect('appJuegalo:panel_admin')
-    return render(request, 'admin/confirmar_eliminar.html', {'juego': juego})
-
-@staff_member_required
-def crear_juego(request):
-    if request.method == 'POST':
-        nombre = request.POST.get('nombre')
-        descripcion = request.POST.get('descripcion')
-        precio = request.POST.get('precio')
-        imagen_url = request.POST.get('imagen_url')
-        
-        juego = Juego.objects.create(
-            id_rawg=0,  # Manual
-            nombre=nombre,
-            descripcion=descripcion,
-            imagen_principal=imagen_url
-        )
-        return redirect('appJuegalo:panel_admin')
-    
-    generos = Genero.objects.all()
-    plataformas = Plataforma.objects.all()
-    return render(request, 'admin/crear_juego.html', {
-        'generos': generos,
-        'plataformas': plataformas
-    })
